@@ -1,0 +1,13 @@
+numpy
+ipynb
+ipykernel
+tqdm
+pillow
+pyparsing
+click
+platformdirs
+evaluate
+accelerate
+transformers
+datasets
+torch --index-url https://download.pytorch.org/whl/cu118
