@@ -11,3 +11,8 @@ accelerate
 transformers
 datasets
 torch --index-url https://download.pytorch.org/whl/cu118
+fastapi
+pydantic
+uvicorn
+plantuml
+streamlit

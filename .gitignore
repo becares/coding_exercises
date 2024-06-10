@@ -1,8 +1,10 @@
-# Folders
+# Directories
 finetuned_phi_15_*
 .vscode
+__pycache__
 
 # Files
 access_token.txt
 
 # Extensions
+*.png
