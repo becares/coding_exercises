@@ -1,16 +1,18 @@
 from fastapi import FastAPI
 from pydantic import BaseModel 
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from peft import PeftModel, PeftConfig
 from plantuml import PlantUML
-import json
+import torch
 import tempfile
 
 app = FastAPI()
 
-#tokenizer = AutoTokenizer.from_pretrained("becares/finetuned_phi_15_plantuml_generation")
-#tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+tokenizer = AutoTokenizer.from_pretrained("becares/finetuned_phi_15_plantuml_generation")
 
-#model = AutoModelForCausalLM.from_pretrained("becares/finetuned_phi_15_plantuml_generation")
+config = PeftConfig.from_pretrained("becares/finetuned_phi_15_plantuml_generation")
+base_model = AutoModelForCausalLM.from_pretrained("microsoft/phi-1_5")
+model = PeftModel.from_pretrained(base_model, "becares/finetuned_phi_15_plantuml_generation")
 
 server = PlantUML(url='http://www.plantuml.com/plantuml/img/')
 
@@ -23,9 +25,9 @@ async def read_root():
 
 @app.post("/predict/")
 async def predict(input: Input):
-    #encoded_inputs = tokenizer(input.scenario, return_tensors="pt")
-    #model_output = model.generate(**encoded_inputs, max_new_tokens=200)
-    #decoded_output = tokenizer.decode(model_output[0], skip_special_tokens=True)
+    encoded_inputs = tokenizer(input.scenario, return_tensors="pt")
+    model_output = model.generate(**encoded_inputs, max_new_tokens=200)
+    decoded_output = tokenizer.decode(model_output[0], skip_special_tokens=True)
     
     decoded_output = input.scenario
     

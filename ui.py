@@ -23,9 +23,9 @@ with st.chat_message("assistant"):
                         PlantUML code for you.")
 
 # Display chat messages from history on app rerun
-#for message in st.session_state.messages:
-#    with st.chat_message(message["role"]):
-#        st.markdown(message["content"])
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
 # Accept user input
 if prompt := st.chat_input("Type in here your scenario..."):
@@ -37,7 +37,7 @@ if prompt := st.chat_input("Type in here your scenario..."):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        response = st.write("Sure! Here you have your diagram:")
+        response = st.write("Sure! Here you have your diagram. Please note that it will take a while...")
         img = st.image(response_handler(prompt))
         
     # Add assistant response to chat history
