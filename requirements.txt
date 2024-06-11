@@ -16,3 +16,5 @@ pydantic
 uvicorn
 plantuml
 streamlit
+bitsandbytes
+peft
