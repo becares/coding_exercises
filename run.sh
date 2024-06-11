@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Initializing fastapi and streamlit..."
-fastapi run main.py &
-streamlit run ui.py &
+conda activate coding-exercises
+fastapi run src/api.py &
+streamlit run src/ui.py &
 wait
