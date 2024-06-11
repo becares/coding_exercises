@@ -3,16 +3,19 @@ import requests
 from matplotlib import pyplot as plt
 import json
 
-# Streamed response emulator
+# Response handler for the received prompt. 
+# Sends the written prompt to the API, so that it can be processed by the model.
 def response_handler(prompt):
     input_data = {"scenario": prompt}
     success = requests.post(url="http://127.0.0.1:8000/predict", data=json.dumps(input_data))
     if success:
         return plt.imread("diagram.png")
+    # TODO: add no success warning
 
+# Title of the GUI
 st.title("PlantUML Scenario generator")
 
-# Initialize chat history
+# Initialize chat history and post instructions message
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -22,12 +25,12 @@ with st.chat_message("assistant"):
                         scenario and the Fine-Tuned Microsoft Phi 1.5 will generate the \
                         PlantUML code for you.")
 
-# Display chat messages from history on app rerun
+# Display chat messages from history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Accept user input
+# Create chat input and input box text
 if prompt := st.chat_input("Type in here your scenario..."):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -44,3 +47,4 @@ if prompt := st.chat_input("Type in here your scenario..."):
     st.session_state.messages.append({"role": "assistant", "content": response})
     st.session_state.messages.append({"role": "assistant", "content": img})
 
+    # TODO: add functionality when an error occurs
